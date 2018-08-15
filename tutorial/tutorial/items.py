@@ -6,7 +6,7 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-
+#this is new
 
 class TutorialItem(scrapy.Item):
     # define the fields for your item here like:
