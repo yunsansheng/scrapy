@@ -1,7 +1,7 @@
 #coding:utf-8
 
 import json
-#import requests
+import requests
 
 class Wechat(object):
 

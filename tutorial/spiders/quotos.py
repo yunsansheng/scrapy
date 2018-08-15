@@ -2,7 +2,6 @@ import scrapy
 from scrapy.loader import ItemLoader
 from tutorial.items import TutorialItem
 import json
-import urllib.request
 from . import Wechat
 
 
