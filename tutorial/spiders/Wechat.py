@@ -1,7 +1,7 @@
 #coding:utf-8
-import urllib.request
+#import urllib.request
 import json
-
+import requests
 
 class Wechat(object):
 
@@ -14,12 +14,12 @@ class Wechat(object):
     def gettoken(self,corpid,corpsecret):
         gettoken_url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=' + corpid + '&corpsecret=' + corpsecret
         try:
-            token_file = urllib.request.urlopen(gettoken_url)
-        except urllib.error.HTTPError as e:
-            print (e.code)
-            print (e.read().decode("utf8"))
+            token_file = requests.get(gettoken_url)
+
+        except Exception as e:
+            print (e)
             sys.exit()
-        token_data = token_file.read().decode('utf-8')
+        token_data = token_file.content.decode('utf-8')
         token_json = json.loads(token_data)
         token_json.keys()
         token = token_json['access_token']
@@ -39,17 +39,20 @@ class Wechat(object):
             "safe":"0"
             }
         send_data = json.dumps(send_values, ensure_ascii=False).encode(encoding='UTF8')
-        send_request = urllib.request.Request(send_url, send_data)
+        print(send_data)
+        #send_request = urllib.request.Request(send_url, send_data)
         #response = json.loads(urllib2.urlopen(send_request).read())
-        response =urllib.request.urlopen(send_request)
-        msg =response.read()
+        #response =urllib.request.urlopen(send_request)
+
+        response = requests.post(send_url,send_data)
+        msg =response.content
         print (str(msg))
 
 
 
 if __name__=="__main__":
     wechat=Wechat()
-    wechat.senddata("测12",'wangchao')
+    wechat.senddata("test12",'wangchao')
 
 
 """
