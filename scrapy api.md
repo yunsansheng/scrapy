@@ -110,9 +110,10 @@ $ scrapy crawl basic -o items.json
 from scrapy.loader import ItemLoader
 #...
 #...
-	def parse(self.response):
+	def parse(self,response):
         l = ItemLoader(item = ProItem(),response=response)
-        
+        # 此处也可以传入其他，不一定是response
+        #Xpath通过使用.前缀变成相对的表达式
         l.add_xpath('title','//div/a/text()')
         l.add_css()
         l.add_value()
@@ -121,5 +122,79 @@ from scrapy.loader import ItemLoader
     # 方便之处在于 不用写extract（）
     # add_xpath更加简洁
     # itemloader提供了很多数据格式化和清洗的方式
+    
+    
+    ###另一种方法
+    def parse(self,response):
+		#...
+        selects =response.xpath(xpath)
+        for selector in selectors:
+            yield self.parse_item(selector,response)
+    def parse_item(self,selector,response):
+		l = ItemLoader(item = ProItem(),selector=selector)
+        l.add_xpaht('.//balabala')
+       
+```
+
+```python
+# CrawlSpider代码示例
+# 继承自CrawlSpider，提供了rules实现parse()方法
+import scrapy
+from scrapy.linkextractors import LinkExtractor
+from scrapy.spiders import CrawlSpider, Rule
+
+
+class MytestSpider(CrawlSpider):
+    name = 'mytest'
+    allowed_domains = ['web']
+    start_urls = ['http://web/']
+
+    rules = (
+        Rule(LinkExtractor(allow=r'Items/'), callback='parse_item', follow=True),
+        Rule(LinkExtractor(restrict_xpath='//p/'), callback='parse_item', follow=True),
+    )
+
+    def parse_item(self, response):
+        i = {}
+        #i['domain_id'] = response.xpath('//input[@id="sid"]/@value').extract()
+        #i['name'] = response.xpath('//div[@id="name"]').extract()
+        #i['description'] = response.xpath('//div[@id="description"]').extract()
+        return i
+
+```
+
+
+
+```python
+#登陆实例
+from scrapy.http import FormRequest
+
+#将start_urls 替换成 start_requests()
+#必须包含fromdata
+#scrapy会自己处理cookie
+
+def start_request(self):
+    return[
+        FormRequest(
+            "https://www.qsones.com",
+             fromdata={"user":"one","pass":"123"}
+        )
+    ]
+```
+
+```
+cmd line
+-a variable=value
+	eg. -a file =todo.csv
+	
+
+设置的几个地方
+1.scrapy再带的设置
+2.project的 settings.py
+3.custom_settings attribute
+4.cmd line. -s CLOSESPIDER_PAGECOUNT =3
+
+$scrapy settings --get CONCURRENT_REQUESTS
+
 ```
 
