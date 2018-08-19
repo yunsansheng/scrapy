@@ -27,9 +27,9 @@ class PiaohuaSpider(scrapy.Spider):
 
         l = ItemLoader(item=MoviesItem(), selector = selector)
 
-        l.add_xpath('name','.//a[@class="ulink"]/text()')
+        l.add_xpath('name','.//a[@class="ulink"]/text()',re="《(.*)》")
         l.add_xpath('url','.//a[@class="ulink"]/@href',MapCompose(lambda i: "http://www.dytt8.net"+ i))
-        l.add_xpath('dt','.//font/text()', re="\d{4}-\d{2}-\d{2}")
+        l.add_xpath('date','.//font/text()', re="\d{4}-\d{2}-\d{2}")
 
         return l.load_item()
 
