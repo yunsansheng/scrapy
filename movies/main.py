@@ -2,4 +2,4 @@
 
 from scrapy import cmdline
 
-cmdline.execute('scrapy crawl piaohua  -o test1.json'.split())
+cmdline.execute('scrapy crawl dytt -s CLOSESPIDER_PAGECOUNT=10  -o test.json'.split())
