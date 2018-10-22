@@ -132,7 +132,7 @@ from scrapy.loader import ItemLoader
             yield self.parse_item(selector,response)
     def parse_item(self,selector,response):
 		l = ItemLoader(item = ProItem(),selector=selector)
-        l.add_xpaht('.//balabala')
+        l.add_xpath('.//balabala')
        
 ```
 
