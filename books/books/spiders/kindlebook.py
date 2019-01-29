@@ -11,13 +11,13 @@ from urllib.parse import urljoin
 class KindlebookSpider(scrapy.Spider):
     name = 'kindlebook'
     allowed_domains = ['amazon.cn']
-    start_urls = ["https://www.amazon.cn/b?node=1993922071&pf_rd_p=71651cda-c38c-439b-91ed-f267f431217e&pf_rd_s=merchandised-search-4&pf_rd_t=101&pf_rd_i=1993922071&pf_rd_m=A1AJ19PSB66TGU&pf_rd_r=PXWRMK8D8CZ877EKFJGH&pf_rd_r=PXWRMK8D8CZ877EKFJGH&pf_rd_p=71651cda-c38c-439b-91ed-f267f431217e"]
+    start_urls = ["https://www.amazon.cn/s/ref=lp_1993922071_pg_2?rh=n%3A116087071%2Cn%3A%21116178071%2Cn%3A%21116179071%2Cn%3A1993922071&page=2&ie=UTF8&qid=1548746879"]
 
     def parse(self, response):
     	# div id="mainResults" > ul 所有li
     	#    a-fixed-left-grid-col a-col-right
     	#       
-        for bookitem in response.xpath('//div[@id="mainResults"]/ul/li'):
+        for bookitem in response.xpath('//div[@id="atfResults"]/ul/li'): #atfResults #mainResults
         	yield {
         	    'bookname':bookitem.xpath('.//div[@class="a-fixed-left-grid"]//h2/text()').extract_first(),
         	    'bookauthor':bookitem.xpath('.//div[@class="a-fixed-left-grid"]//div[@class="a-row a-spacing-small"]/div[@class="a-row a-spacing-none"]/span[2]/text()').extract_first(),
