@@ -1,4 +1,27 @@
 # scrapy api
+- 常用
+
+  ```
+  scrapy shell http://example.com 
+  
+  scrapy startproject [projectname]  #创建
+  
+  scrapy genspider [options] <name> <domain> name 和 domain必填  
+  - scrapy genspider myname qsones.com
+  - scrapy genspider -t crawl myname qsones.com
+  在项目中创建，会在spiders下增加对应的模版
+  
+  ```
+
+
+
+
+
+
+
+
+
+
 - scrapy
 
   ```python
@@ -15,7 +38,7 @@
    'twisted_version', 'utils', 'version_info']
   ```
 
-  
+
 
   - scrapy.Item 或 scrapy.item.Item
 
@@ -27,6 +50,7 @@
 
   - genspider(默认basic) :用于生成spider
     `scrapy genspider [options] <name> <domain>` name 和 domain必填
+
     - basic
 
       ```
