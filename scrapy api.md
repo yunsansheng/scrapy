@@ -222,3 +222,7 @@ $scrapy settings --get CONCURRENT_REQUESTS
 
 ```
 
+- erro record
+
+1. 爬取的第一页和其他页不一样 - z.cn
+
